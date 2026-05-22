@@ -1549,7 +1549,7 @@
   <div class="intro-left">
     <p class="eyebrow rule-line">About</p>
     <div class="intro-person">
-      <p class="intro-person-name">Arpit Gupta</p>
+      <p class="intro-person-name" style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:17px; font-weight:200; letter-spacing:0.04em;">design<span style="color:var(--warm);">.</span>eyez</p>
       <p class="intro-person-role">Independent Eyewear Consultant · India</p>
     </div>
       <!-- India Map -->
@@ -2165,15 +2165,33 @@
 
   // Autoplay muted (required by browsers), then unmute immediately after playback starts
   function forcePlay(v) {
+    // Always start muted — required for Chrome autoplay policy
     v.muted = true;
-    v.loop = true;
-    v.volume = 1;
-    const go = () => {
+    v.loop  = true;
+    v.setAttribute('playsinline', '');
+
+    const attempt = () => {
       const p = v.play();
-      if (p) p.then(() => { v.muted = false; }).catch(() => setTimeout(() => forcePlay(v), 300));
+      if (p !== undefined) {
+        p.then(() => {
+          // Unmute only after confirmed playing, via user-interaction gate for Chrome
+          const unmute = () => { v.muted = false; document.removeEventListener('click', unmute); };
+          document.addEventListener('click', unmute, { once: true });
+        }).catch(() => {
+          // Retry silently — common on slow connections
+          setTimeout(() => attempt(), 500);
+        });
+      }
     };
-    if (v.readyState >= 2) { go(); } else { v.addEventListener('canplay', go, { once: true }); }
-    v.addEventListener('pause', () => v.play().catch(() => {}));
+
+    if (v.readyState >= 2) {
+      attempt();
+    } else {
+      v.addEventListener('canplay', attempt, { once: true });
+    }
+
+    // Keep looping even if browser pauses it
+    v.addEventListener('pause', () => { if (!document.hidden) v.play().catch(() => {}); });
   }
   document.querySelectorAll('.hero-vid-wrap video').forEach(forcePlay);
 
