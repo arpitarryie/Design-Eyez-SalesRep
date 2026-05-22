@@ -1,5 +1,13 @@
 <!DOCTYPE html>
 <html lang="en"><head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-T7NG6D5GN6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-T7NG6D5GN6');
+</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>design.eyez — Independent Luxury Eyewear Brand Representative India | Arpit Gupta</title>
@@ -1144,176 +1152,6 @@
     }
 
 
-    /* ═══════════════════════════════════════
-       MOBILE OVERHAUL — iPhone / small screens
-    ═══════════════════════════════════════ */
-    @media (max-width: 600px) {
-
-      /* ── Brand image strips: 2-col grid on mobile ── */
-      [data-dle-strip] {
-        display: grid !important;
-        grid-template-columns: 1fr 1fr !important;
-        gap: 1px !important;
-        height: auto !important;
-        min-height: 0 !important;
-        padding: 0 !important;
-        overflow: visible !important;
-      }
-      [data-dle-strip] > img,
-      [data-dle-strip] img {
-        width: 100% !important;
-        height: 180px !important;
-        flex: none !important;
-        object-fit: cover !important;
-        display: block !important;
-        position: static !important;
-        left: auto !important;
-        top: auto !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-      }
-      /* strip wrapper containers */
-      div:has(> [data-dle-strip]) {
-        padding: 0 !important;
-        margin-top: 0 !important;
-        gap: 0 !important;
-        align-items: stretch !important;
-      }
-      /* Strip wrapper — remove column flex, just stack */
-      [data-dle-strip] ~ [data-dle-strip],
-      div:has(> [data-dle-strip]) {
-        flex-direction: column !important;
-        gap: 0 !important;
-        padding: 0 !important;
-        margin-top: 0 !important;
-        align-items: stretch !important;
-      }
-
-      /* ── Brand intro: single column ── */
-      .mykita-intro,
-      .vava-intro,
-      .glco-split,
-      .lindberg-intro {
-        grid-template-columns: 1fr !important;
-        gap: 28px !important;
-        padding: 40px 20px 32px !important;
-      }
-
-      /* ── Section headers ── */
-      .sec-head {
-        flex-direction: column !important;
-        align-items: flex-start !important;
-        gap: 4px !important;
-        padding: 0 20px 20px !important;
-      }
-      .sec-head-right { display: none; }
-
-      /* ── Constellation: full stack ── */
-      #constellation .const-cols {
-        grid-template-columns: 1fr !important;
-        min-height: auto !important;
-      }
-      #constellation .c-carousel { height: 280px !important; }
-      #constellation .const-cols > div:last-child {
-        padding: 32px 20px !important;
-      }
-      #constellation svg { width: 100% !important; }
-
-      /* ── Contact email grid: single column ── */
-      #contact > div[style*="grid-template-columns:1fr 1fr"],
-      #contact > div[style*="grid-template-columns: 1fr 1fr"] {
-        grid-template-columns: 1fr !important;
-      }
-
-      /* ── Philosophy ── */
-      #philosophy { padding: 56px 20px; }
-
-      /* ── Intro ── */
-      #intro {
-        grid-template-columns: 1fr !important;
-        gap: 32px !important;
-        padding: 56px 20px !important;
-      }
-      .intro-left { position: static !important; }
-
-      /* ── Hero ── */
-      .hero-wordmark {
-        font-size: clamp(36px, 11vw, 56px) !important;
-        letter-spacing: 0.25em !important;
-      }
-      .hero-tagline { font-size: 12px !important; }
-
-      /* ── Footer ── */
-      footer {
-        flex-direction: column !important;
-        gap: 20px !important;
-        padding: 28px 20px !important;
-        text-align: center !important;
-      }
-      footer > div:first-child {
-        flex-wrap: wrap !important;
-        justify-content: center !important;
-        gap: 16px !important;
-      }
-      footer img { height: 140px !important; margin: 0 auto !important; }
-
-      /* ── Fixed social bar: move to bottom ── */
-      #social-bar {
-        top: auto !important;
-        bottom: 72px !important;
-        right: 12px !important;
-        transform: none !important;
-        gap: 10px !important;
-      }
-      #social-bar .nav-tagline-vert { display: none; }
-
-      /* ── Floating designeyez logo: smaller ── */
-      img[style*="position:fixed"][style*="bottom:0"] {
-        height: 140px !important;
-        right: 8px !important;
-      }
-
-      /* ── GLCO section ── */
-      #glco .glco-split { 
-        grid-template-columns: 1fr !important; 
-      }
-
-      /* ── LINDBERG intro ── */
-      .lindberg-intro { 
-        grid-template-columns: 1fr !important; 
-      }
-
-      /* ── Brand heading size ── */
-      .brand-hed { font-size: clamp(28px, 8vw, 40px) !important; }
-      .brand-bq { font-size: 15px !important; }
-      .brand-p { font-size: 13px !important; line-height: 1.8 !important; }
-
-      /* ── Lookbooks link hidden if present ── */
-      a[href="lookbook.html"] { display: none !important; }
-
-      /* ── VAVA tags wrap ── */
-      .vava-tags { flex-wrap: wrap !important; gap: 6px !important; }
-
-      /* ── Stats row ── */
-      .intro-stats { gap: 20px !important; }
-      .stat-n { font-size: 32px !important; }
-    }
-
-    /* Tablet tweaks 601–900px */
-    @media (min-width: 601px) and (max-width: 900px) {
-      [data-dle-strip] > img { height: 220px !important; }
-      .mykita-intro, .vava-intro, .glco-split, .lindberg-intro {
-        grid-template-columns: 1fr !important;
-        padding: 48px 28px !important;
-      }
-      #constellation .const-cols {
-        grid-template-columns: 1fr !important;
-      }
-      #contact > div[style*="grid-template-columns"] {
-        grid-template-columns: 1fr !important;
-      }
-    }
-
     /* ── iPad Pro / large tablet landscape: 1000–1200px ── */
     @media (min-width: 1001px) and (max-width: 1200px) {
       :root { --gutter: 48px; }
@@ -1339,7 +1177,184 @@
       top: auto !important;
       display: block !important;
     }
-</style>
+
+    /* ═══════════════════════════════════════════════
+       RESPONSIVE — phones (portrait & landscape) + tablets
+    ═══════════════════════════════════════════════ */
+
+    /* ── Portrait phones (≤ 480px) ── */
+    @media (max-width: 480px) {
+
+      html body [data-dle-strip] {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 1px !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: none !important;
+        padding: 0 !important;
+        width: 100% !important;
+        overflow: visible !important;
+        flex-wrap: nowrap !important;
+      }
+      html body [data-dle-strip] img {
+        display: block !important;
+        width: 100% !important;
+        height: 240px !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        flex: none !important;
+        position: static !important;
+        left: auto !important;
+        top: auto !important;
+        object-fit: cover !important;
+        object-position: center !important;
+      }
+    }
+
+    /* ── Landscape phones / small tablets (481–900px) ── */
+    @media (min-width: 481px) and (max-width: 900px) {
+      html body [data-dle-strip] {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 1px !important;
+        height: auto !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+        flex-wrap: nowrap !important;
+      }
+      html body [data-dle-strip] img {
+        display: block !important;
+        width: 100% !important;
+        height: 280px !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        flex: none !important;
+        position: static !important;
+        left: auto !important;
+        top: auto !important;
+        object-fit: cover !important;
+      }
+    }
+
+    /* ── All phones & small tablets (≤ 900px) — layout & chrome ── */
+    @media (max-width: 900px) {
+
+      /* Layout containers — kill all multi-column grids */
+      #intro, .mykita-intro, .vava-intro, .glco-split, .lindberg-intro,
+      .const-cols, #constellation .const-cols,
+      .about-strip-inner, .footer-wm, .glco-text, .lindberg-intro-right {
+        grid-template-columns: 1fr !important;
+        gap: 28px !important;
+      }
+
+      /* Section padding */
+      #intro, #philosophy, #contact,
+      .mykita-intro, .vava-intro, .glco-split, .lindberg-intro {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        padding-top: 48px !important;
+        padding-bottom: 32px !important;
+      }
+
+      /* Sticky elements unstick */
+      .intro-left { position: static !important; }
+
+      /* Brand strip wrappers — kill all padding/margin/flex */
+      div:has(> [data-dle-strip]) {
+        padding: 0 !important;
+        margin-top: 0 !important;
+        gap: 0 !important;
+        align-items: stretch !important;
+        flex-direction: column !important;
+      }
+
+      /* Section headers — stack, hide right-side meta */
+      .sec-head {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 4px !important;
+        padding: 0 20px 16px !important;
+      }
+      .sec-head-right { display: none !important; }
+
+      /* Hero */
+      nav { padding: 0 16px !important; height: 52px !important; }
+      .nav-tagline, .nav-links { display: none !important; }
+      .hero-wordmark {
+        font-size: clamp(34px, 11vw, 60px) !important;
+        letter-spacing: 0.22em !important;
+      }
+      .hero-tagline { font-size: 12px !important; letter-spacing: 0.1em !important; }
+      .hero-sup { font-size: 9px !important; }
+      .hero-poles { display: none !important; }
+      .hero-vid-wrap { grid-template-columns: 1fr !important; }
+      .hero-seam { display: none !important; }
+      .hero-vid-wrap video:last-child { display: none !important; }
+
+      /* Constellation: stack carousel above diagram */
+      #constellation .const-cols > div:first-child {
+        height: 280px !important;
+        min-height: 280px !important;
+      }
+      #constellation .c-carousel { height: 280px !important; }
+      #constellation .const-cols > div:last-child {
+        padding: 32px 20px !important;
+      }
+      #constellation svg { width: 100% !important; height: auto !important; }
+
+      /* Contact email grid → single column */
+      #contact div[style*="grid-template-columns:1fr 1fr"],
+      #contact div[style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+      }
+
+      /* Brand text sizes */
+      .brand-hed { font-size: clamp(28px, 7vw, 40px) !important; }
+      .brand-bq { font-size: 14px !important; }
+      .brand-p { font-size: 13px !important; line-height: 1.8 !important; }
+      .intro-pull { font-size: clamp(22px, 6vw, 32px) !important; }
+
+      /* Footer */
+      footer {
+        flex-direction: column !important;
+        gap: 18px !important;
+        padding: 24px 16px !important;
+        text-align: center !important;
+      }
+      footer > div { flex-wrap: wrap !important; justify-content: center !important; gap: 14px !important; }
+      footer img { height: 120px !important; }
+
+      /* Fixed social bar — bottom right */
+      #social-bar {
+        top: auto !important;
+        bottom: 80px !important;
+        right: 8px !important;
+        transform: none !important;
+        gap: 8px !important;
+      }
+      #social-bar > span,
+      #social-bar > div:first-child:not([style*=linkedin]):not([style*=instagram]),
+      #social-bar [style*="writing-mode"] { display: none !important; }
+      #social-bar > div:last-child { display: none !important; }
+
+      /* Floating logo */
+      body > img[style*="position:fixed"][style*="bottom:0"] {
+        height: 120px !important;
+        right: 4px !important;
+        opacity: 0.92 !important;
+      }
+
+      /* Stats */
+      .intro-stats { gap: 18px !important; flex-wrap: wrap !important; }
+      .stat-n { font-size: 28px !important; }
+
+      /* VAVA tags */
+      .vava-tags { flex-wrap: wrap !important; gap: 6px !important; }
+    }
+
+  </style>
 </head>
 <body>
 
