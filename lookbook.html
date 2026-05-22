@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lookbooks — design.eyez</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;1,200;1,300&family=Inter:wght@200;300;400&display=swap" rel="stylesheet"/>
+  <script src="https://unpkg.com/page-flip/dist/js/page-flip.browser.js"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    :root{--warm:#8e7f6b;--warm-lt:#c4b49a;--cream:#faf8f4;
+      --serif:'Cormorant Garamond',Georgia,serif;--sans:'Inter','Helvetica Neue',sans-serif}
+    body{font-family:var(--sans);font-weight:300;background:#181715;color:#fff;
+      -webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+
+    .topbar{display:flex;align-items:center;justify-content:space-between;padding:0 48px;
+      height:56px;border-bottom:1px solid rgba(255,255,255,0.07);flex-shrink:0}
+    .topbar-back{font-size:9.5px;letter-spacing:0.18em;text-transform:uppercase;
+      color:rgba(255,255,255,0.35);display:flex;align-items:center;gap:10px;
+      transition:color 0.3s;text-decoration:none}
+    .topbar-back:hover{color:var(--warm-lt)}
+    .topbar-wm{font-size:13px;font-weight:200;color:rgba(255,255,255,0.3);
+      font-family:var(--sans);letter-spacing:0.03em}
+    .topbar-wm em{font-family:var(--serif);font-style:italic;font-size:15px}
+    .topbar-tag{font-size:9px;letter-spacing:0.28em;text-transform:uppercase;color:rgba(255,255,255,0.2)}
+
+    .brand-tabs{display:flex;justify-content:center;padding:20px 0 18px;flex-shrink:0}
+    .brand-tab{font-size:9.5px;font-weight:300;letter-spacing:0.22em;text-transform:uppercase;
+      color:rgba(255,255,255,0.28);padding:8px 32px;
+      border-bottom:1px solid rgba(255,255,255,0.08);cursor:pointer;
+      transition:color 0.3s,border-color 0.3s;user-select:none}
+    .brand-tab:hover{color:rgba(255,255,255,0.55)}
+    .brand-tab.active{color:var(--warm-lt);border-bottom-color:var(--warm-lt)}
+    .tab-sep{width:1px;height:14px;background:rgba(255,255,255,0.1);align-self:center}
+
+    .stage{flex:1;display:flex;flex-direction:column;align-items:center;
+      justify-content:center;padding:20px 48px 16px;overflow:hidden}
+
+    .book-set{display:none;flex-direction:column;align-items:center;width:100%;max-width:960px}
+    .book-set.active{display:flex}
+    .pf-wrap{width:100%;position:relative}
+
+    .lb-page{background:var(--cream);position:relative;overflow:hidden}
+    .lb-page-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+    .lb-page-inner img{width:100%;height:100%;object-fit:cover;display:block}
+    .lb-watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+      font-family:var(--serif);font-size:clamp(18px,3.5vw,38px);font-weight:200;
+      letter-spacing:0.2em;color:rgba(0,0,0,0.032);white-space:nowrap;
+      pointer-events:none;user-select:none}
+    .lb-pagenum{position:absolute;bottom:14px;font-family:var(--serif);font-size:10px;
+      font-weight:300;color:rgba(0,0,0,0.18);letter-spacing:0.08em}
+    .lb-page.pg-left .lb-pagenum{left:22px}
+    .lb-page.pg-right .lb-pagenum{right:22px}
+    .ph-wrap{display:flex;flex-direction:column;align-items:center;gap:9px}
+    .ph-icon{width:26px;height:26px;border:1px solid rgba(0,0,0,0.1);
+      display:flex;align-items:center;justify-content:center}
+    .ph-icon svg{opacity:0.22}
+    .ph-text{font-size:7px;letter-spacing:0.2em;text-transform:uppercase;
+      color:rgba(0,0,0,0.22);font-weight:300}
+
+    .nav-row{display:flex;align-items:center;gap:16px;margin-top:20px}
+    .nav-btn{width:36px;height:36px;display:flex;align-items:center;justify-content:center;
+      border:1px solid rgba(255,255,255,0.1);cursor:pointer;color:rgba(255,255,255,0.35);
+      transition:all 0.3s;user-select:none}
+    .nav-btn:hover:not(.off){border-color:var(--warm-lt);color:var(--warm-lt)}
+    .nav-btn.off{opacity:0.2;cursor:default;pointer-events:none}
+    .dots{display:flex;gap:6px;align-items:center}
+    .dot{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,0.15);
+      cursor:pointer;transition:all 0.3s}
+    .dot.on{background:var(--warm-lt);transform:scale(1.4)}
+    .spread-lbl{font-size:8.5px;letter-spacing:0.18em;text-transform:uppercase;
+      color:rgba(255,255,255,0.25);min-width:110px;text-align:center}
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html" class="topbar-back">
+    <svg width="14" height="10" viewBox="0 0 14 10" fill="none" stroke="currentColor" stroke-width="1">
+      <line x1="14" y1="5" x2="0" y2="5"/><polyline points="4,1 0,5 4,9"/>
+    </svg>
+    Back
+  </a>
+  <div class="topbar-wm">design<em>.eyez</em></div>
+  <div class="topbar-tag">Lookbooks</div>
+</div>
+
+<div class="brand-tabs">
+  <div class="brand-tab active" data-brand="mykita">MYKITA</div>
+  <div class="tab-sep"></div>
+  <div class="brand-tab" data-brand="vava">VAVA</div>
+  <div class="tab-sep"></div>
+  <div class="brand-tab" data-brand="glco">Garrett Leight</div>
+</div>
+
+<div class="stage">
+
+  <div class="book-set active" id="set-mykita">
+    <div class="pf-wrap" id="wrap-mykita"></div>
+    <div class="nav-row">
+      <div class="nav-btn off" id="prev-mykita"><svg width="12" height="10" viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="1"><line x1="12" y1="5" x2="0" y2="5"/><polyline points="4,1 0,5 4,9"/></svg></div>
+      <div class="dots" id="dots-mykita"></div>
+      <div class="spread-lbl" id="lbl-mykita">Pages 1 – 2</div>
+      <div class="nav-btn" id="next-mykita"><svg width="12" height="10" viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="1"><line x1="0" y1="5" x2="12" y2="5"/><polyline points="8,1 12,5 8,9"/></svg></div>
+    </div>
+  </div>
+
+  <div class="book-set" id="set-vava">
+    <div class="pf-wrap" id="wrap-vava"></div>
+    <div class="nav-row">
+      <div class="nav-btn off" id="prev-vava"><svg width="12" height="10" viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="1"><line x1="12" y1="5" x2="0" y2="5"/><polyline points="4,1 0,5 4,9"/></svg></div>
+      <div class="dots" id="dots-vava"></div>
+      <div class="spread-lbl" id="lbl-vava">Pages 1 – 2</div>
+      <div class="nav-btn" id="next-vava"><svg width="12" height="10" viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="1"><line x1="0" y1="5" x2="12" y2="5"/><polyline points="8,1 12,5 8,9"/></svg></div>
+    </div>
+  </div>
+
+  <div class="book-set" id="set-glco">
+    <div class="pf-wrap" id="wrap-glco"></div>
+    <div class="nav-row">
+      <div class="nav-btn off" id="prev-glco"><svg width="12" height="10" viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="1"><line x1="12" y1="5" x2="0" y2="5"/><polyline points="4,1 0,5 4,9"/></svg></div>
+      <div class="dots" id="dots-glco"></div>
+      <div class="spread-lbl" id="lbl-glco">Pages 1 – 2</div>
+      <div class="nav-btn" id="next-glco"><svg width="12" height="10" viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="1"><line x1="0" y1="5" x2="12" y2="5"/><polyline points="8,1 12,5 8,9"/></svg></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const IMGS = {
+  mykita: [
+    'images/Lookbook/mykita_pages/page_01.jpg',
+    'images/Lookbook/mykita_pages/page_02.jpg',
+    'images/Lookbook/mykita_pages/page_03.jpg',
+    'images/Lookbook/mykita_pages/page_04.jpg',
+    'images/Lookbook/mykita_pages/page_05.jpg',
+    'images/Lookbook/mykita_pages/page_06.jpg',
+    'images/Lookbook/mykita_pages/page_07.jpg',
+    'images/Lookbook/mykita_pages/page_08.jpg',
+    'images/Lookbook/mykita_pages/page_09.jpg',
+    'images/Lookbook/mykita_pages/page_10.jpg',
+    'images/Lookbook/mykita_pages/page_11.jpg',
+    'images/Lookbook/mykita_pages/page_12.jpg',
+    'images/Lookbook/mykita_pages/page_13.jpg',
+    'images/Lookbook/mykita_pages/page_14.jpg',
+    'images/Lookbook/mykita_pages/page_15.jpg',
+    'images/Lookbook/mykita_pages/page_16.jpg',
+    'images/Lookbook/mykita_pages/page_17.jpg',
+    'images/Lookbook/mykita_pages/page_18.jpg',
+    'images/Lookbook/mykita_pages/page_19.jpg',
+    'images/Lookbook/mykita_pages/page_20.jpg',
+    'images/Lookbook/mykita_pages/page_21.jpg',
+    'images/Lookbook/mykita_pages/page_22.jpg',
+    'images/Lookbook/mykita_pages/page_23.jpg',
+    'images/Lookbook/mykita_pages/page_24.jpg',
+    'images/Lookbook/mykita_pages/page_25.jpg',
+    'images/Lookbook/mykita_pages/page_26.jpg',
+    'images/Lookbook/mykita_pages/page_27.jpg',
+    'images/Lookbook/mykita_pages/page_28.jpg',
+    'images/Lookbook/mykita_pages/page_29.jpg',
+    'images/Lookbook/mykita_pages/page_30.jpg',
+    'images/Lookbook/mykita_pages/page_31.jpg',
+    'images/Lookbook/mykita_pages/page_32.jpg',
+    'images/Lookbook/mykita_pages/page_33.jpg',
+    'images/Lookbook/mykita_pages/page_34.jpg',
+    'images/Lookbook/mykita_pages/page_35.jpg',
+    'images/Lookbook/mykita_pages/page_36.jpg',
+    'images/Lookbook/mykita_pages/page_37.jpg',
+    'images/Lookbook/mykita_pages/page_38.jpg',
+    'images/Lookbook/mykita_pages/page_39.jpg',
+    'images/Lookbook/mykita_pages/page_40.jpg',
+    'images/Lookbook/mykita_pages/page_41.jpg',
+    'images/Lookbook/mykita_pages/page_42.jpg',
+    'images/Lookbook/mykita_pages/page_43.jpg',
+    'images/Lookbook/mykita_pages/page_44.jpg',
+    'images/Lookbook/mykita_pages/page_45.jpg',
+    'images/Lookbook/mykita_pages/page_46.jpg',
+    'images/Lookbook/mykita_pages/page_47.jpg',
+    'images/Lookbook/mykita_pages/page_48.jpg',
+    'images/Lookbook/mykita_pages/page_49.jpg',
+    'images/Lookbook/mykita_pages/page_50.jpg',
+    'images/Lookbook/mykita_pages/page_51.jpg',
+    'images/Lookbook/mykita_pages/page_52.jpg',
+    'images/Lookbook/mykita_pages/page_53.jpg',
+    'images/Lookbook/mykita_pages/page_54.jpg',
+    'images/Lookbook/mykita_pages/page_55.jpg',
+    'images/Lookbook/mykita_pages/page_56.jpg',
+    'images/Lookbook/mykita_pages/page_57.jpg',
+    'images/Lookbook/mykita_pages/page_58.jpg',
+    'images/Lookbook/mykita_pages/page_59.jpg',
+    'images/Lookbook/mykita_pages/page_60.jpg',
+    'images/Lookbook/mykita_pages/page_61.jpg',
+    'images/Lookbook/mykita_pages/page_62.jpg',
+    'images/Lookbook/mykita_pages/page_63.jpg',
+    'images/Lookbook/mykita_pages/page_64.jpg',
+    'images/Lookbook/mykita_pages/page_65.jpg',
+    'images/Lookbook/mykita_pages/page_66.jpg',
+    'images/Lookbook/mykita_pages/page_67.jpg',
+    'images/Lookbook/mykita_pages/page_68.jpg',
+    'images/Lookbook/mykita_pages/page_69.jpg',
+    'images/Lookbook/mykita_pages/page_70.jpg',
+    'images/Lookbook/mykita_pages/page_71.jpg',
+    'images/Lookbook/mykita_pages/page_72.jpg',
+    'images/Lookbook/mykita_pages/page_73.jpg',
+    'images/Lookbook/mykita_pages/page_74.jpg',
+    'images/Lookbook/mykita_pages/page_75.jpg',
+    'images/Lookbook/mykita_pages/page_76.jpg',
+    'images/Lookbook/mykita_pages/page_77.jpg',
+    'images/Lookbook/mykita_pages/page_78.jpg',
+    'images/Lookbook/mykita_pages/page_79.jpg',
+    'images/Lookbook/mykita_pages/page_80.jpg',
+    'images/Lookbook/mykita_pages/page_81.jpg',
+    'images/Lookbook/mykita_pages/page_82.jpg',
+    'images/Lookbook/mykita_pages/page_83.jpg',
+    'images/Lookbook/mykita_pages/page_84.jpg',
+    'images/Lookbook/mykita_pages/page_85.jpg',
+    'images/Lookbook/mykita_pages/page_86.jpg',
+    'images/Lookbook/mykita_pages/page_87.jpg',
+    'images/Lookbook/mykita_pages/page_88.jpg',
+    'images/Lookbook/mykita_pages/page_89.jpg',
+    'images/Lookbook/mykita_pages/page_90.jpg',
+    'images/Lookbook/mykita_pages/page_91.jpg',
+    'images/Lookbook/mykita_pages/page_92.jpg',
+    'images/Lookbook/mykita_pages/page_93.jpg',
+    'images/Lookbook/mykita_pages/page_94.jpg',
+    'images/Lookbook/mykita_pages/page_95.jpg',
+    'images/Lookbook/mykita_pages/page_96.jpg',
+    'images/Lookbook/mykita_pages/page_97.jpg',
+    'images/Lookbook/mykita_pages/page_98.jpg',
+    'images/Lookbook/mykita_pages/page_99.jpg',
+    'images/Lookbook/mykita_pages/page_100.jpg',
+    'images/Lookbook/mykita_pages/page_101.jpg',
+    'images/Lookbook/mykita_pages/page_102.jpg',
+    'images/Lookbook/mykita_pages/page_103.jpg',
+    'images/Lookbook/mykita_pages/page_104.jpg',
+    'images/Lookbook/mykita_pages/page_105.jpg',
+    'images/Lookbook/mykita_pages/page_106.jpg',
+    'images/Lookbook/mykita_pages/page_107.jpg',
+    'images/Lookbook/mykita_pages/page_108.jpg',
+    'images/Lookbook/mykita_pages/page_109.jpg',
+    'images/Lookbook/mykita_pages/page_110.jpg',
+    'images/Lookbook/mykita_pages/page_111.jpg',
+    'images/Lookbook/mykita_pages/page_112.jpg',
+    'images/Lookbook/mykita_pages/page_113.jpg',
+    'images/Lookbook/mykita_pages/page_114.jpg',
+    'images/Lookbook/mykita_pages/page_115.jpg',
+    'images/Lookbook/mykita_pages/page_116.jpg',
+    'images/Lookbook/mykita_pages/page_117.jpg',
+    'images/Lookbook/mykita_pages/page_118.jpg',
+    'images/Lookbook/mykita_pages/page_119.jpg',
+    'images/Lookbook/mykita_pages/page_120.jpg',
+    'images/Lookbook/mykita_pages/page_121.jpg',
+    'images/Lookbook/mykita_pages/page_122.jpg',
+    'images/Lookbook/mykita_pages/page_123.jpg',
+    'images/Lookbook/mykita_pages/page_124.jpg',
+    'images/Lookbook/mykita_pages/page_125.jpg',
+    'images/Lookbook/mykita_pages/page_126.jpg',
+    'images/Lookbook/mykita_pages/page_127.jpg',
+    'images/Lookbook/mykita_pages/page_128.jpg',
+    'images/Lookbook/mykita_pages/page_129.jpg',
+    'images/Lookbook/mykita_pages/page_130.jpg',
+    'images/Lookbook/mykita_pages/page_131.jpg',
+    'images/Lookbook/mykita_pages/page_132.jpg',
+    'images/Lookbook/mykita_pages/page_133.jpg',
+    'images/Lookbook/mykita_pages/page_134.jpg',
+    'images/Lookbook/mykita_pages/page_135.jpg',
+    'images/Lookbook/mykita_pages/page_136.jpg',
+    'images/Lookbook/mykita_pages/page_137.jpg',
+    'images/Lookbook/mykita_pages/page_138.jpg',
+    'images/Lookbook/mykita_pages/page_139.jpg',
+    'images/Lookbook/mykita_pages/page_140.jpg',
+    'images/Lookbook/mykita_pages/page_141.jpg',
+    'images/Lookbook/mykita_pages/page_142.jpg',
+    'images/Lookbook/mykita_pages/page_143.jpg',
+    'images/Lookbook/mykita_pages/page_144.jpg',
+    'images/Lookbook/mykita_pages/page_145.jpg',
+    'images/Lookbook/mykita_pages/page_146.jpg',
+    'images/Lookbook/mykita_pages/page_147.jpg',
+    'images/Lookbook/mykita_pages/page_148.jpg',
+    'images/Lookbook/mykita_pages/page_149.jpg',
+    'images/Lookbook/mykita_pages/page_150.jpg',
+    'images/Lookbook/mykita_pages/page_151.jpg',
+    'images/Lookbook/mykita_pages/page_152.jpg',
+    'images/Lookbook/mykita_pages/page_153.jpg',
+    'images/Lookbook/mykita_pages/page_154.jpg',
+    'images/Lookbook/mykita_pages/page_155.jpg',
+    'images/Lookbook/mykita_pages/page_156.jpg',
+    'images/Lookbook/mykita_pages/page_157.jpg',
+    'images/Lookbook/mykita_pages/page_158.jpg',
+    'images/Lookbook/mykita_pages/page_159.jpg'
+  ],
+  vava: [
+    'images/Vava/INTERNET_SIZE/AB__0043__-e_INTERNET_SIZE.jpg',
+    'images/Vava/INTERNET_SIZE/AB__0080__-e_INTERNET_SIZE.jpg',
+    'images/Vava/INTERNET_SIZE/AB__0146__-e_INTERNET_SIZE.jpg',
+    'images/Vava/INTERNET_SIZE/AB__0176__-e_INTERNET_SIZE.jpg',
+    'images/Vava/INTERNET_SIZE/AB__0248__-e_INTERNET_SIZE.jpg',
+    'images/Vava/INTERNET_SIZE/AB__0346__-e_INTERNET_SIZE.jpg',
+    'images/Vava/INTERNET_SIZE/AB__0371__-e_INTERNET_SIZE.jpg',
+    'images/Vava/INTERNET_SIZE/AB__0439__-e_INTERNET_SIZE.jpg',
+    'images/Vava/INTERNET_SIZE/AB__0449__-e_INTERNET_SIZE.jpg',
+    'images/Vava/INTERNET_SIZE/AB__0485__-e_INTERNET_SIZE.jpg'
+  ],
+  glco: []
+};
+
+const PH = `<div class="ph-wrap">
+  <div class="ph-icon"><svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="#888" stroke-width="0.8"><rect x="0.5" y="0.5" width="12" height="12"/><line x1="0.5" y1="4.5" x2="12.5" y2="4.5"/><line x1="4.5" y1="0.5" x2="4.5" y2="12.5"/></svg></div>
+  <span class="ph-text">Image placeholder</span>
+</div>`;
+
+function buildPages(bid, brandName, wrap) {
+  const imgs = IMGS[bid] || [];
+  const total = Math.max(imgs.length, 10);
+  for (let i = 0; i < total; i++) {
+    const pg = document.createElement('div');
+    const side = (i % 2 === 0) ? 'pg-left' : 'pg-right';
+    pg.className = 'lb-page ' + side;
+    const inner = document.createElement('div');
+    inner.className = 'lb-page-inner';
+    if (imgs[i]) {
+      const img = document.createElement('img');
+      img.src = imgs[i]; img.alt = brandName;
+      inner.appendChild(img);
+    } else {
+      inner.innerHTML = PH;
+    }
+    const wm = document.createElement('span');
+    wm.className = 'lb-watermark'; wm.textContent = brandName;
+    const num = document.createElement('span');
+    num.className = 'lb-pagenum'; num.textContent = i + 1;
+    pg.appendChild(inner); pg.appendChild(wm); pg.appendChild(num);
+    wrap.appendChild(pg);
+  }
+}
+
+function bookDims(wrap) {
+  const totalW = wrap.offsetWidth || 800;
+  const pageW = Math.floor(totalW / 2);
+  const pageH = Math.floor(pageW * 1.38);
+  return { pageW, pageH };
+}
+
+function getTotalPages(bid) { return Math.max((IMGS[bid]||[]).length, 10); }
+function getTotalSpreads(bid) { return Math.ceil(getTotalPages(bid) / 2); }
+function getPageLabel(bid, si) {
+  const lp = si*2+1, rp = Math.min(lp+1, getTotalPages(bid));
+  return lp === rp ? 'Page ' + lp : 'Pages ' + lp + ' – ' + rp;
+}
+
+function buildDots(bid) {
+  const container = document.getElementById('dots-' + bid);
+  const total = getTotalSpreads(bid);
+  const dotCount = Math.min(total, 12);
+  for (let i = 0; i < dotCount; i++) {
+    const spreadIdx = (dotCount === total) ? i : Math.round(i * (total-1) / (dotCount-1));
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' on' : '');
+    d.dataset.spread = spreadIdx;
+    container.appendChild(d);
+  }
+}
+
+const books = {};
+const tabsInit = {};
+
+function updateUI(bid, spreadIdx) {
+  const total = getTotalSpreads(bid);
+  books[bid].spread = spreadIdx;
+  const dots = document.querySelectorAll('#dots-' + bid + ' .dot');
+  let nearest = null, minDist = Infinity;
+  dots.forEach(d => {
+    const dist = Math.abs(+d.dataset.spread - spreadIdx);
+    if (dist < minDist) { minDist = dist; nearest = d; }
+  });
+  dots.forEach(d => d.classList.remove('on'));
+  if (nearest) nearest.classList.add('on');
+  document.getElementById('lbl-' + bid).textContent = getPageLabel(bid, spreadIdx);
+  document.getElementById('prev-' + bid).classList.toggle('off', spreadIdx === 0);
+  document.getElementById('next-' + bid).classList.toggle('off', spreadIdx >= total - 1);
+}
+
+/* Web Audio flip sound */
+let _ac = null;
+function flipSound() {
+  try {
+    if (!_ac) _ac = new (window.AudioContext || window.webkitAudioContext)();
+    if (_ac.state === 'suspended') _ac.resume();
+    const ctx = _ac, now = ctx.currentTime, sr = ctx.sampleRate, dur = 0.22;
+    const buf = ctx.createBuffer(2, Math.floor(sr*dur), sr);
+    for (let ch = 0; ch < 2; ch++) {
+      const d = buf.getChannelData(ch);
+      for (let i = 0; i < d.length; i++) {
+        const t = i/d.length;
+        d[i] = (Math.random()*2-1) * Math.sin(Math.PI*t) * Math.exp(-t*5);
+      }
+    }
+    const src = ctx.createBufferSource(); src.buffer = buf;
+    const bp = ctx.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=3000; bp.Q.value=0.6;
+    const g = ctx.createGain(); g.gain.setValueAtTime(0.28, now); g.gain.exponentialRampToValueAtTime(0.001, now+dur);
+    src.connect(bp); bp.connect(g); g.connect(ctx.destination); src.start(now);
+  } catch(e) {}
+}
+
+function initBook(bid, brandName) {
+  const wrap = document.getElementById('wrap-' + bid);
+  buildPages(bid, brandName, wrap);
+  buildDots(bid);
+  const { pageW, pageH } = bookDims(wrap);
+  const pf = new St.PageFlip(wrap, {
+    width: pageW, height: pageH, size: 'stretch',
+    drawShadow: true, flippingTime: 900,
+    usePortrait: false, showCover: false,
+    autoSize: true, maxShadowOpacity: 0.55,
+    mobileScrollSupport: false, clickEventForward: false,
+    swipeDistance: 30, useMouseEvents: true
+  });
+  pf.loadFromHTML(wrap.querySelectorAll('.lb-page'));
+  pf.on('flip', e => { flipSound(); updateUI(bid, Math.floor(e.data/2)); });
+  books[bid] = { pf, spread: 0 };
+  document.getElementById('prev-' + bid).addEventListener('click', () => {
+    if (books[bid].spread > 0) pf.flipPrev();
+  });
+  document.getElementById('next-' + bid).addEventListener('click', () => {
+    if (books[bid].spread < getTotalSpreads(bid)-1) pf.flipNext();
+  });
+  document.querySelectorAll('#dots-' + bid + ' .dot').forEach(d => {
+    d.addEventListener('click', () => pf.flip(+d.dataset.spread * 2));
+  });
+}
+
+function activateBrand(bid) {
+  document.querySelectorAll('.brand-tab').forEach(t => t.classList.toggle('active', t.dataset.brand===bid));
+  document.querySelectorAll('.book-set').forEach(s => s.classList.toggle('active', s.id==='set-'+bid));
+  if (!tabsInit[bid]) {
+    tabsInit[bid] = true;
+    const names = { mykita:'MYKITA', vava:'VAVA', glco:'Garrett Leight' };
+    setTimeout(() => initBook(bid, names[bid]), 60);
+  } else if (books[bid]) {
+    books[bid].pf.update();
+  }
+}
+
+document.querySelectorAll('.brand-tab').forEach(t => t.addEventListener('click', () => activateBrand(t.dataset.brand)));
+document.addEventListener('keydown', e => {
+  const bid = document.querySelector('.brand-tab.active').dataset.brand;
+  if (!books[bid]) return;
+  const b = books[bid];
+  if (e.key==='ArrowRight' && b.spread<getTotalSpreads(bid)-1) b.pf.flipNext();
+  if (e.key==='ArrowLeft'  && b.spread>0) b.pf.flipPrev();
+});
+
+activateBrand('mykita');
+</script>
+</body>
+</html>
