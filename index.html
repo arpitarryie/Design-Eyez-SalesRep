@@ -1153,17 +1153,31 @@
       [data-dle-strip] {
         display: grid !important;
         grid-template-columns: 1fr 1fr !important;
-        gap: 0 !important;
+        gap: 1px !important;
         height: auto !important;
         min-height: 0 !important;
         padding: 0 !important;
-        flex-wrap: wrap !important;
+        overflow: visible !important;
       }
-      [data-dle-strip] > img {
+      [data-dle-strip] > img,
+      [data-dle-strip] img {
         width: 100% !important;
-        height: 200px !important;
+        height: 180px !important;
         flex: none !important;
         object-fit: cover !important;
+        display: block !important;
+        position: static !important;
+        left: auto !important;
+        top: auto !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+      }
+      /* strip wrapper containers */
+      div:has(> [data-dle-strip]) {
+        padding: 0 !important;
+        margin-top: 0 !important;
+        gap: 0 !important;
+        align-items: stretch !important;
       }
       /* Strip wrapper — remove column flex, just stack */
       [data-dle-strip] ~ [data-dle-strip],
@@ -2192,13 +2206,4 @@
     startAuto();
   })();
 </script>
-
-<div class="dm-row"><label>Zoom</label><input type="range" id="dm-zoom" min="80" max="400" value="100" step="1" oninput="DLE.cropZoom(this.value)"><span id="dm-zv">100%</span></div>
-    <div class="dm-btns"><button class="db" onclick="DLE.cropCancel()">Cancel</button><button class="db sv" onclick="DLE.cropApply()">Apply</button></div>
-  </div>
-</div>
-
-
-
-
 </body></html>
